@@ -1,0 +1,72 @@
+﻿<h3>Upcoming Jobs</h3>
+
+<table class="table table-condensed table-striped small-font">
+    <tr>
+        <th>Name</th>
+        <th>Phone number</th>
+        <th>Address</th>
+        <th><button type="button" ng-click="sortsuburb()">Suburb</button></th>
+        <th><button type="button" ng-click="sortsize()">House Size</button></th>
+        <th>Extra Services</th>
+        <th><button type="button" ng-click="nextdate()">Cleaning Date</button></th>
+        <th></th>
+    </tr>
+
+    <tr ng-repeat="ajob in comingjobs |orderBy:order : reverse">
+        <td class="text-capitalize">{{ajob.name}}</td>
+        <td>{{ajob.phone}}</td>
+        <td>{{ajob.address}}</td>
+        <td>{{ajob.suburb}}</td>
+        <td>{{ajob.size}}</td>
+        <td>
+            <div class="checkbox-inline">
+                <label class="control-label">
+                    <input type="checkbox" value="true" ng-model="ajob.extras.dishes" />Dishes
+                </label>
+            </div>
+            <div class="checkbox-inline">
+                <label class="control-label">
+                    <input type="checkbox" value="true" ng-model="ajob.extras.laundry" />Laundry
+                </label>
+            </div>
+            <div class="checkbox-inline">
+                <label class="control-label">
+                    <input type="checkbox" value="true" ng-model="ajob.extras.windows" />Windows
+                </label>
+            </div>
+        </td>
+        <td>{{ajob.next}}</td>
+        <td ng-hide="!userhide">
+            <button class="btn btn-info btn-sm" type="button" ng-click="checkjob(ajob)">Check</button>
+        </td>
+
+    </tr>
+
+</table>
+
+<!--only manager can click on the map to checkoff-->
+<div ng-if="userhide">
+    <ng-map zoom-to-include-markers="auto" default-style="false" class="myMap">
+        <div ng-repeat="thejob in comingjobs">
+                <marker position="{{thejob.location.lat}}, {{thejob.location.lng}}" title="{{thejob.name}}" icon="http://maps.google.com/mapfiles/ms/icons/{{thejob.icon}}-dot.png" on-click="click(thejob)" on-dblclick="dblClick(thejob)"></marker>
+            </div>
+    </ng-map>
+    <p>Blue means small house size</p>
+    <p>Green means medium house size</p>
+    <p>Red means large house size</p>
+</div>
+
+<!--staff can only view upcomming jobs on the map-->
+<div ng-if="!userhide">
+    <ng-map zoom-to-include-markers="auto" default-style="false" class="myMap">
+        <div ng-repeat="thejob in comingjobs">
+            <marker position="{{thejob.location.lat}}, {{thejob.location.lng}}" title="{{thejob.name}}" icon="http://maps.google.com/mapfiles/ms/icons/{{thejob.icon}}-dot.png"></marker>
+        </div>
+    </ng-map>
+    <p>Blue means small house size</p>
+    <p>Green means medium house size</p>
+    <p>Red means large house size</p>
+</div>
+
+
+       

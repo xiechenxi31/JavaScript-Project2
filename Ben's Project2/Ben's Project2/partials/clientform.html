@@ -1,0 +1,154 @@
+﻿<h3 ng-show="editIndex == -1">Add New Job</h3>
+<h3 ng-show="editIndex != -1">Edit Existing Job</h3>
+
+<form name="userForm" novalidate ng-submit="submit()">
+    
+    <div class="form-group" ng-class="{ 'has-error': userForm.name.$touched && userForm.name.$invalid}">
+        <label class="control-label">Name</label>
+        <input type="text" name="name" class="form-control" ng-model="job.name" required />
+
+        <div class="help-block" ng-messages="userForm.name.$error" ng-show="userForm.name.$touched">
+            <p ng-message="required">A name is required</p>
+        </div>
+    </div>
+
+
+
+    <div class="form-group" ng-class="{'has-error': userForm.phone.$touched && userForm.phone.$invalid}">
+        <label class="control-label">Phone</label>
+        <input type="text" name="phone" class="form-control" ng-model="job.phone" required />
+
+        <div class="help-block" ng-messages="userForm.phone.$error" ng-show="userForm.phone.$touched">
+            <p ng-message="required">A phone number is required</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group" ng-class="{ 'has-error': userForm.email.$touched && userForm.email.$invalid}">
+        <label class="control-label">Email (optional)</label>
+        <input type="email" name="email" class="form-control" ng-model="job.email" />
+        <div class="help-block" ng-messages="userForm.email.$error" ng-show="userForm.email.$touched">
+            <p ng-message="email"> This needs to be a valid email</p>
+        </div>        
+    </div>
+
+
+
+    <div class="form-group" ng-class="{'has-error':userForm.address.$touched && userForm.suburb.$invalid}">
+        <label class="control-label">Address</label>
+        <input places-auto-complete ng-model="job.address" types="{{types}}" component-restrictions="{country:'nz'}" 
+               on-place-changed="placeChanged()" name="address" class="form-control" required/>
+
+        <div class="help-block" ng-messages="userForm.address.$error" ng-show="userForm.address.$touched">
+            <p ng-message="required">Address is required</p>
+        </div>
+
+    </div>
+
+    <!--make this one disabled because we can get it from controller after we enter a canterbury address-->
+    <div class="form-group" ng-class="{'has-error': userForm.suburb.$invalid && userForm.suburb.$touched}">
+        <label class="control-label">Suburb</label>
+        <input type="text" name="suburb" class="form-control" ng-model="job.suburb" required disabled />
+
+    </div>
+
+
+
+    <div class="form-group" ng-class="{'has-error':userForm.housesize.$invalid && userForm.housesize.$touched}">
+        <label class="control-label">House Size</label>
+        <br />
+        <div class="radio-inline">
+            <label class="control-label">
+                <input type="radio" name="housesize" value="Small" ng-model="job.size" required /> Small
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label class="control-label">
+                <input type="radio" name="housesize" value="Medium" ng-model="job.size" required /> Medium
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label class="control-label">
+                <input type="radio" name="housesize" value="Large" ng-model="job.size" required /> Large
+            </label>
+        </div>
+
+        <div class="help-block" ng-messages="userForm.housesize.$error" ng-show="userForm.housesize.$invalid">
+            <p ng-message="required">Please specify the house size</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label class="control-label"> Extra Services</label>
+        <br />
+        <div class="checkbox-inline">
+            <label class="control-label">
+                <input type="checkbox" name="dishes" value="true" ng-model="job.extras.dishes" /> Washing the dishes
+            </label>
+        </div>
+        <div class="checkbox-inline">
+            <label class="control-label">
+                <input type="checkbox" name="laundry" value="true" ng-model="job.extras.laundry" />Doing laundry
+            </label>
+        </div>
+        <div class="checkbox-inline">
+            <label class="control-label">
+                <input type="checkbox" name="window" value="true" ng-model="job.extras.windows" />Cleaning windows
+            </label>
+        </div>
+    </div>
+
+
+
+
+    <!--default is weekly-->
+    <div class="form-group" ng-class="{'has-error':userForm.schedule.$invalid}">
+        <label class="control-label">Schedule</label>
+        <div class="radio-inline">
+            <label class="control-label">
+                <input type="radio" name="schedule" value="Weekly" ng-model="job.schedule" required /> Weekly
+            </label>
+        </div>
+        <div class="radio-inline">
+            <label class="control-label">
+                <input type="radio" name="schedule" value="Fortnightly" ng-model="job.schedule" required /> Fortnightly
+            </label>
+        </div>
+        <div class="help-block" ng-messages="userForm.schedule.$error" ng-show="userForm.schedule.$invalid">
+            <p ng-message="required">Please specify the schedule</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label class="control-label">Last Cleaned (readonly)</label>
+        <input type="text" name="lastcleaned" class="form-control" ng-model="job.last" disabled />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Next Clean(readonly)</label>
+        <input type="text" class="form-control" ng-model="job.next" disabled />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Total Price(readonly)</label>
+        <input type="text" name="price" ng-model="job.price" disabled class="form-control" />        
+    </div>
+
+
+
+    <div class="form-group">
+        <button type="submit" ng-disabled="userForm.$invalid" class="btn btn-success">Submit</button>
+        <button type="button" ng-click="canceledit()" class="btn btn-danger">Cancel</button>
+    </div>
+
+
+</form>
+

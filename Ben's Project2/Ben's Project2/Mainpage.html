@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html ng-app="tidykiwi" ng-controller="mainctrl">
+<head>
+    <title>{{company}}</title>
+    <!--<meta charset="utf-8" />-->
+    <script src="https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyB45fHPM6Zk8d0QqqA7nCN9FROphCuh4lo"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/firebase.js"></script>
+    <script src="Scripts/angularfire.js"></script>
+    <script src="Scripts/angular-messages.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/bsActive.js"></script>
+    <script src="Scripts/ng-map.js"></script>
+    <link href="Stylesheets/bootstrap.css" rel="stylesheet" />
+    <script src="Project2.js"></script>
+
+    <style>
+        .myMap {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+
+</head>
+<body>
+    <!--setup the navigation bar-->
+    <nav class="navbar navbar-default navbackground">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/home">{{company}}</a>
+
+            <!--show the hamburger menu only for extra small screen size-->
+            <button class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse" ng-class="{'collapse': isCollapsed}">
+            <ul class="nav navbar-nav" bs-active-link>
+                <li><a href="#/">Home</a></li>
+                <li><a href="#/clientlist" ng-hide="!hide"> Client list</a></li>
+
+                <!--only manager can add new job and because the next cleane date is display only, so clientform needs to meet two require to show.-->
+                <li><a href="#/clientform" ng-show="addhide && upcominghide">Add Client</a></li>
+                <li><a href="#/upcomingjobs" ng-hide="!upcominghide">Upcoming Jobs</a></li>              
+            </ul>
+            <!--show the username or not login-->          
+            <p class="navbar-text navbar-right">{{suername}}</p>
+
+        </div>
+    </nav>
+    <p>
+        <button type="button" ng-click="trylogout()" ng-hide="!hide" class="btn btn-danger">Logout</button>
+    </p>
+
+    <div ng-view></div>
+
+    <!--login form-->
+    <div ng-hide="hide">
+        <label>Email</label>
+        <input type="text" ng-model="emailaddress" />
+        <label>Password</label>
+        <input type="password" ng-model="emailpassword" />
+        <button type="button" ng-click="login()" class="btn btn-success">Log in</button>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿<h3>Client list</h3>
+<table class="table table-condensed table-striped small-font">
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Last cleaned</th>
+        <th>Next cleaned</th>
+        <th></th>
+    </tr>
+    <tr ng-repeat="job in joblist | orderBy:'name'">
+        <td class="text-capitalize">{{job.name}}</td>
+        <td>{{job.phone}}</td>
+        <td>{{job.email}}</td>
+        <td>{{job.last}}</td>
+        <td>{{job.next}}</td>
+        <td ng-hide="!userhide">
+            <button class="btn btn-info btn-sm" type="button" ng-click="edit(job)">Edit</button>
+            <button class="btn btn-danger btn-sm" type="button" ng-click="delete(job)">Delete</button>
+        </td>
+    </tr>
+</table>
+
+<!--Because the next cleane date is display only, so the manager can go to the client list only is he selected today's date-->
+<button class="btn btn-info btn-sm" type="button" ng-click="addnewjobs()" ng-show="addhide && upcominghide">Add new job</button>
